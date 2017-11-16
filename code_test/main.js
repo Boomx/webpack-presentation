@@ -1,3 +1,6 @@
 var calculator = require('./calculator');
-var element  = document.getElementById('hello-world');
-element.innerHTML = "Hello World " + calculator.sum(4,4);
+var teste = require('./teste');
+
+var result = calculator.sum(4,4);
+
+console.log(teste.seteComSete(result),5);

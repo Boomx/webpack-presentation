@@ -3,7 +3,22 @@ class: center, middle
 # Otimizando e construindo seu front-end com Webpack
 
 ---
+
+
+## O que ele não é
+
+.center[![Right-aligned image](https://image.slidesharecdn.com/webpackslides-150821153920-lva1-app6892/95/webpack-slides-5-638.jpg)]
+
+---
+
+## Funcionamento 
+
+<img src="https://cdn.scotch.io/1/OgOa3kqeStetJOfDqZyI_1HB2N57.png" width="800" height="400" />
+
+---
+
 class: center, middle
+
 # Instalação
 
 É mais simples que parece
@@ -57,18 +72,7 @@ A configuração e uso do webpack pode parecer às vezes monstruosa, pois não �
 
 1 - 'npm install webpack'
 
-2 - webpack.config.js
-
-```javascript
-module.exports = {   
-   entry: './main.js',   
-   output: {     
-       filename: 'bundle.js'   
-   } 
-}; 
-```
-
-3 - Módulo de entrada
+2 - Módulo de entrada
 
 ```javascript
 // main.js
@@ -89,6 +93,17 @@ exports.sum = function(first,second){
 exports.seteComSete = function(expect,result){
     return expect === result ? "Acertô miserávi" : "Errou feio, errou rude";
 }
+```
+
+3 - webpack.config.js ou 'webpack main.js bundle.js'
+
+```javascript
+module.exports = {   
+   entry: './main.js',   
+   output: {     
+       filename: 'bundle.js'   
+   } 
+}; 
 ```
 
 ---
@@ -212,8 +227,6 @@ bundle.js  2.77 kB       0  [emitted]  main
 
 ---
 
-#links
+class: center, middle
 
-http://webpackmonitor.com/img/overview.gif
-
-https://camo.githubusercontent.com/acb0c92759578da7cbbdcd38a57fa682bedcc83b/68747470733a2f2f726f6163686a632e6769746875622e696f2f6d61696e332e676966
+# Dúvidas?
