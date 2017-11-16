@@ -1,8 +1,8 @@
-function MyPlugin(options) {
+function WebpackStatePlugin(options) {
   // Configure your plugin with options...
 }
 
-MyPlugin.prototype.apply = function(compiler) {
+WebpackStatePlugin.prototype.apply = function(compiler) {
   compiler.plugin("compile", function(params) {
     console.log("The compiler is starting to compile...");
   });
@@ -21,4 +21,4 @@ MyPlugin.prototype.apply = function(compiler) {
   });
 };
 
-module.exports = MyPlugin;
+module.exports = WebpackStatePlugin;

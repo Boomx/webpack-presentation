@@ -10,28 +10,28 @@ class: center, middle
 
 2. webpack.config.js
 
->```javascript
->module.exports = {   
->   entry: './main.js',   
->   output: {     
->       filename: 'bundle.js'   
->   } 
->}; 
->```
+```javascript
+module.exports = {   
+   entry: './main.js',   
+   output: {     
+       filename: 'bundle.js'   
+   } 
+}; 
+```
 
 3. módulos em js
 
->```javascript
->// main.js
->var calculator = require('./calculator');
->var element  = document.getElementById('hello-world');
->element.innerHTML = "Hello World " + calculator.sum(4,4);
+```javascript
+// main.js
+var calculator = require('./calculator');
+var element  = document.getElementById('hello-world');
+element.innerHTML = "Hello World " + calculator.sum(4,4);
 
->//calculator.js
->exports.sum = function(first,second){
->    return first+second;
->}
->```
+//calculator.js
+exports.sum = function(first,second){
+    return first+second;
+}
+```
 
 ---
 
@@ -42,6 +42,7 @@ Plugins são a espinha do Webpack. Por dentro dele, todo funcionamento é feito 
 Essa arquitetura de plugins torna fácil tanto o uso, a customização e também a criação de outros plugins.
 
 ---
+
 ## Lista extensa de plugins
 
 Esse Module Bundler tem um longo catálogo de plugins feitos tanto pelo core team quanto pela comunidade. 
@@ -49,34 +50,107 @@ Esse Module Bundler tem um longo catálogo de plugins feitos tanto pelo core tea
 ### Exemplos de plugins
 
 Que modificam seu código:
-- Babel-Minify-Webpack-Plugin - Usa babel-minify para otimizar o código
-- Uglifyjs-Webpack-Plugin - Plugin para usar o UgifyJs
+- **Babel-Minify-Webpack-Plugin** - Usa babel-minify para otimizar o código
+- **Uglifyjs-Webpack-Plugin** - Plugin para usar o UgifyJs
 
 Que modificam a compilação:
-- Ignore-Plugin - Exclui módulos desejados dos bundles
-- No-Emit-On-Errors-Plugin - Interrompe a produção de códigos quando um erro aocntece
-- Provide-Plugin - Usa e busca por módulos sem precisar do uso de import/require
+- **Ignore-Plugin** - Exclui módulos desejados dos bundles
+- **No-Emit-On-Errors-Plugin** - Interrompe a produção de códigos quando um erro aocntece
+- **Provide-Plugin** - Usa e busca por módulos sem precisar do uso de import/require
 
---- 
+---
 
 Que auxiliam em logs:
-- Banner-Plugin - Adiciona um banner na compilação de cada plugin
-- Webpack-Monitor - Captura estatísticas sobre o código e apresenta de uma forma interativa
+- **Banner-Plugin** - Adiciona um banner na compilação de cada plugin
+- **Webpack-Monitor** - Captura estatísticas sobre o código e apresenta de uma forma interativa
 
 Que modifica os bundles:
-- Aggressive-Splitting-Plugin - Divide os bundles resultantes em alguns menores ainda (bom para http2)
-- Extract-Text-Webpack-Plugin - Extrai texto (css) para arquivos separados
+- **Aggressive-Splitting-Plugin** - Divide os bundles resultantes em alguns menores ainda (bom para http2)
+- **Extract-Text-Webpack-Plugin** - Extrai texto (css) para arquivos separados
 
 Outros: 
-- Loader-Options-Plugin - Usado para migrar do webpack 1 para 2 
-- Npm-Install-Webpack-Plugin - Instala dependências npm durante o desenvolvimento automáticamente
+- **Loader-Options-Plugin** - Usado para migrar do webpack 1 para 2 
+- **Npm-Install-Webpack-Plugin** - Instala dependências npm durante o desenvolvimento automaticamente
 
---- 
+---
+class: center, middle
 
 ### Fazendo um plugin
 
+Quase tão fácil quanto usar um plugin no Webpack é construir um.
 
+---
 
+Basicamente o que é preciso para escrever um é entender o ciclo do webpack e seus eventos.
+
+```javascript
+// MyPlugin.js
+function MyPlugin(options) {
+  // Configure your plugin with options...
+}
+
+MyPlugin.prototype.apply = function(compiler) {
+  compiler.plugin("compile", function(params) {
+    console.log("The compiler is starting to compile...");
+  });
+
+  compiler.plugin("compilation", function(compilation) {
+    console.log("The compiler is starting a new compilation...");
+
+    compilation.plugin("optimize", function() {
+      console.log("The compilation is starting to optimize files...");
+    });
+  });
+
+  compiler.plugin("emit", function(compilation, callback) {
+    console.log("The compilation is going to emit files...");
+    callback();
+  });
+};
+
+module.exports = MyPlugin;
+
+```
+
+---
+
+Depois chamar o plugin nas configurações
+
+```javascript
+var WebpackStatePlugin = require('./webpackStatePlugin')
+
+module.exports = {   
+    entry: './main.js',   
+    output: {     
+        filename: 'bundle.js'   
+    },
+    plugins: [
+        new WebpackStatePlugin({
+            options: 'nada'
+        })
+    ]
+
+}; 
+```
+
+E tá pronto o sorvetinho
+
+```bash 
+The compiler is starting to compile...
+The compiler is starting a new compilation...
+The compilation is starting to optimize files...
+The compilation is going to emit files...
+Hash: 4fb8f4accb920dc51915
+Version: webpack 3.8.1
+Time: 143ms
+    Asset     Size  Chunks             Chunk Names
+bundle.js  2.77 kB       0  [emitted]  main
+   [0] ./main.js 158 bytes {0} [built]
+   [1] ./calculator.js 66 bytes {0} [built]
+
+```
+
+--- 
 
 
 http://webpackmonitor.com/img/overview.gif
