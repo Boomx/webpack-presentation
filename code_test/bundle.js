@@ -68,8 +68,8 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var calculator = __webpack_require__(1);
-console.log(calculator);
-document.getElementById('hello-world').innerHTML = "Hello World " + calculator.sum(4,4);
+var element  = document.getElementById('hello-world');
+element.innerHTML = "Hello World " + calculator.sum(4,4);
 
 
 /***/ }),
@@ -77,7 +77,6 @@ document.getElementById('hello-world').innerHTML = "Hello World " + calculator.s
 /***/ (function(module, exports) {
 
 exports.sum = function(first,second){
-    console.log(first);
     return first+second;
 }
 
